@@ -1,69 +1,77 @@
 #include "sort.h"
 
 /**
-* partition - sort the selected section
-* @array: array of data to be sorted
-* @low: beginning of the selected list
-* @high: end of the selected list
-* @size: size of the array
-* Return: index increased from low if there is a swap
+*swap - Swaps two integers
+*@x: int
+*@y: int
+*Return: Swapped int, void.
 */
 
-int partition(int *array, int low, int high, size_t size)
+void swap(int *x, int *y)
 {
-int pivot = array[high], tmp = 0, i = low - 1, j = low;
+int tmp;
 
-while (j <= high - 1)
+tmp = *x;
+*x = *y;
+*y = tmp;
+}
+
+
+/**
+* partition - Partition an array using pivot
+* @array: Array
+* @start: int
+* @end: int
+* @size: size of array (size_t)
+* Return: index of pivote
+*/
+
+int partition(int *array, int start, int end, size_t size)
 {
-if (array[j] <= pivot)
+int pivot_value = array[end];
+int i = start - 1, j;
+for (j = start; j <= end; j++)
+{
+if (array[j] <= pivot_value)
 {
 i++;
-tmp = array[i];
-array[i] = array[j];
-array[j] = tmp;
 if (i != j)
+{
+swap(&array[i], &array[j]);
 print_array(array, size);
 }
-j++;
 }
-i++;
-tmp = array[i];
-array[i] = array[high];
-array[high] = tmp;
-if (array[i] != array[high])
-print_array(array, size);
-return (1);
+}
+return (i);
 }
 
 /**
-* quick - quicksort is a divide & conquer algorithm
-* @array: array of data to be sorted
-* @low: beginning of the selected list
-* @high: end of the selected list
-* @size: size of the array
+* quicksort_recursion - Sorts recursively an Array
+* @array: Array to be sorted
+* @start: The lowest value of the array
+* @end: highest value of the array
+* @size: Size of The Array
+* Return: void
 */
 
-void quick(int *array, int low, int high, size_t size)
+void quicksort_recursion(int *array, int start, int end, size_t size)
 {
-int p = 0;
-
-if (low < high)
+int x;
+if (start < end)
 {
-p = partition(array, low, high, size);
-quick(array, low, p - 1, size);
-quick(array, p + 1, high, size);
+x = partition(array, start, end, size);
+quicksort_recursion(array, start, x - 1, size);
+quicksort_recursion(array, x + 1, end, size);
 }
 }
 
 /**
-* quick_sort - quicksort is a divide & conquer algorithm
-* @array: array of data to be sorted
-* @size: size of the array
+* quick_sort - Quick Sort Algorithm using lomuto partition
+* @array: Array to sort
+* @size: Size of The Array
+* Return: Sorted Array, void
 */
-
 void quick_sort(int *array, size_t size)
 {
-if (size < 2)
-return;
-quick(array, 0, size - 1, size);
+quicksort_recursion(array, 0, size - 1, size);
 }

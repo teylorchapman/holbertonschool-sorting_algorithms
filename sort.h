@@ -28,13 +28,13 @@ void insertion_sort_list(listint_t **list);
 void selection_sort(int *array, size_t size);
 void quick_sort(int *array, size_t size);
 
-
+/* aux functions */
 void swap_head(listint_t **list, listint_t *aux);
 void swap_middle(listint_t *aux);
 void swap_tail(listint_t *aux);
+void swap(int *x, int *y);
+void quicksort_recursioin(int *array, int start, int end, size_t size);
 int partition(int *array, int low, int high, size_t size);
-void quick(int *array, int low, int high, size_t size);
-
 
 
 #endif
